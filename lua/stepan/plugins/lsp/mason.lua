@@ -1,54 +1,53 @@
 return {
-  "williamboman/mason.nvim",
-  dependencies = {
-    "williamboman/mason-lspconfig.nvim",
-    "WhoIsSethDaniel/mason-tool-installer.nvim",
+  {
+    "mason-org/mason.nvim",
   },
-  config = function()
-    -- import mason
-    local mason = require("mason")
+  {
+    "mason-org/mason-lspconfig.nvim",
+  },
+  {
+    "WhoIsSethDaniel/mason-tool-installer.nvim",
+    config = function()
+      local mason = require("mason")
+      local mason_lspconfig = require("mason-lspconfig")
+      local mason_tool_installer = require("mason-tool-installer")
 
-    -- import mason-lspconfig
-    local mason_lspconfig = require("mason-lspconfig")
-
-    local mason_tool_installer = require("mason-tool-installer")
-
-    -- enable mason and configure icons
-    mason.setup({
-      ui = {
-        icons = {
-          package_installed = "✓",
-          package_pending = "➜",
-          package_uninstalled = "✗",
+      mason.setup({
+        ui = {
+          icons = {
+            package_installed = "✓",
+            package_pending = "➜",
+            package_uninstalled = "✗",
+          },
         },
-      },
-    })
+      })
 
-    mason_lspconfig.setup({
-      -- list of servers for mason to install
-      ensure_installed = {
-        "html",
-        "lua_ls",
-        "pyright",
-        "gopls",
-      },
-    })
+      mason_lspconfig.setup({
+        ensure_installed = {
+          "html",
+          "lua_ls",
+          "pyright",
+          "gopls",
+        },
+        automatic_installation = false,
+      })
 
-    mason_tool_installer.setup({
-      ensure_installed = {
-        "prettier", -- prettier formatter
-        "stylua", -- lua formatter
-        "isort", -- python formatter
-        "black", -- python formatter
-        "pylint",
-        "eslint_d",
-        "gofumpt", -- Go formatter
-        "golines", -- Go code formatter
-        "gomodifytags", -- Tool to modify Go struct tags
-        "gotests", -- Tool to generate Go tests
-        "impl", -- Generate Go interface stubs
-        "staticcheck", -- Go static analysis
-      },
-    })
-  end,
+      mason_tool_installer.setup({
+        ensure_installed = {
+          "prettier",
+          "stylua",
+          "isort",
+          "black",
+          "pylint",
+          "eslint_d",
+          "gofumpt",
+          "golines",
+          "gomodifytags",
+          "gotests",
+          "impl",
+          "staticcheck",
+        },
+      })
+    end,
+  },
 }
